@@ -7,7 +7,7 @@ import {ItemInput} from './List'
 import styled from 'styled-components'
 import {StyledHeader} from './Header'
 import {StyledDivider} from './Divider'
-import {useColorSchemeVar, useTheme} from '../ThemeProvider'
+import {useTheme} from '../ThemeProvider'
 import {
   activeDescendantActivatedDirectly,
   activeDescendantActivatedIndirectly,
@@ -15,33 +15,14 @@ import {
 } from '../behaviors/focusZone'
 import {useSSRSafeId} from '@react-aria/ssr'
 
-/**
- * These colors are not yet in our default theme.  Need to remove this once they are added.
- */
 const customItemThemes = {
   default: {
-    hover: {
-      light: 'rgba(46, 77, 108, 0.06)',
-      dark: 'rgba(201, 206, 212, 0.12)',
-      dark_dimmed: 'rgba(201, 206, 212, 0.12)'
-    },
-    focus: {
-      light: 'rgba(54, 77, 100, 0.16)',
-      dark: 'rgba(201, 206, 212, 0.24)',
-      dark_dimmed: 'rgba(201, 206, 212, 0.24)'
-    }
+    hover: get('colors.neutral.subtle'),
+    focus: get('colors.neutral.muted')
   },
   danger: {
-    hover: {
-      light: 'rgba(234, 74, 90, 0.08)',
-      dark: 'rgba(248, 81, 73, 0.16)',
-      dark_dimmed: 'rgba(248, 81, 73, 0.16)'
-    },
-    focus: {
-      light: 'rgba(234, 74, 90, 0.14)',
-      dark: 'rgba(248, 81, 73, 0.24)',
-      dark_dimmed: 'rgba(248, 81, 73, 0.24)'
-    }
+    hover: get('colors.danger.subtle'),
+    focus: get('colors.danger.muted')
   }
 } as const
 
@@ -370,10 +351,9 @@ export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.El
     },
     [onAction, disabled, itemProps, onClick]
   )
-
   const customItemTheme = customItemThemes[variant]
-  const hoverBackground = useColorSchemeVar(customItemTheme.hover, 'inherit')
-  const focusBackground = useColorSchemeVar(customItemTheme.focus, 'inherit')
+  const hoverBackground = customItemTheme.hover
+  const focusBackground = customItemTheme.focus
 
   const {theme} = useTheme()
 
