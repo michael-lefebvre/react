@@ -45,6 +45,7 @@ const TextInputWrapper = styled.span<StyledWrapperProps>`
   border-radius: ${get('radii.2')};
   outline: none;
   box-shadow: ${get('shadows.primer.shadow.inset')};
+  cursor: text;
 
   ${props => {
     if (props.hasIcon) {
@@ -79,7 +80,7 @@ const TextInputWrapper = styled.span<StyledWrapperProps>`
   ${props =>
     props.disabled &&
     css`
-      color: ${get('colors.fg.muted')};
+      color: ${get('colors.primer.fg.disabled')};
       background-color: ${get('colors.input.disabledBg')};
       border-color: ${get('colors.border.default')};
     `}
