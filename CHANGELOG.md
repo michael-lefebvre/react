@@ -1,5 +1,67 @@
 # @primer/components
 
+## 31.1.0
+
+### Minor Changes
+
+- [#1523](https://github.com/primer/react/pull/1523) [`56e2f159`](https://github.com/primer/react/commit/56e2f159b9d627564a7717e6961a6bfa355189b3) Thanks [@mperrotti](https://github.com/mperrotti)! - Add the ability to truncate tokens in the TextInputWithToken component when the input is not focused
+
+### Patch Changes
+
+- [#1529](https://github.com/primer/react/pull/1529) [`da566044`](https://github.com/primer/react/commit/da566044649a114e23789e3ac90c022cdbf5eaeb) Thanks [@mperrotti](https://github.com/mperrotti)! - Fixes a bug in `TextInputWithTokens` where the next token would not receive focus after the user deleted the first token using the keyboard
+
+* [#1526](https://github.com/primer/react/pull/1526) [`1378e771`](https://github.com/primer/react/commit/1378e771323a48e6084c5ffac7d93b54960f4a0e) Thanks [@mperrotti](https://github.com/mperrotti)! - replaces flexbox gap usage with margins
+
+## 31.0.1
+
+### Patch Changes
+
+- [#1521](https://github.com/primer/react/pull/1521) [`28b5980c`](https://github.com/primer/react/commit/28b5980c64dc5e05cb3ddb0c8c5f18fa5d0c490c) Thanks [@siddharthkp](https://github.com/siddharthkp)! - Add `trailingVisual` prop to ActionList/ActionMenu. Deprecate `trailingIcon` and `trailingText` props.
+
+## 31.0.0
+
+### Major Changes
+
+- [#1514](https://github.com/primer/react/pull/1514) [`dc789025`](https://github.com/primer/react/commit/dc789025d4976e2f0863e1f377c4a834aab88e3a) Thanks [@colebemis](https://github.com/colebemis)! - Remove deprecated color variables by upgrading to @primer/primitives [v5](https://github.com/primer/primitives/pull/251)
+
+  **Note:** Install [`eslint-plugin-primer-react`](https://primer.style/react/linting) to ensure that you're not using any deprecated or removed color variables.
+
+### Patch Changes
+
+- [#1512](https://github.com/primer/react/pull/1512) [`1e5ac406`](https://github.com/primer/react/commit/1e5ac406f8558a20248157a9bfe13ee4709890c8) Thanks [@pksjce](https://github.com/pksjce)! - Change disabled color from muted to custom primer disabled color
+
+## 30.3.0
+
+### Minor Changes
+
+- [#1490](https://github.com/primer/react/pull/1490) [`c156b07a`](https://github.com/primer/react/commit/c156b07ab6f2f5ad6d35d1c4f89d8a7f37ad1cef) Thanks [@mperrotti](https://github.com/mperrotti)! - Adds `Autocomplete`, `AutocompleteMenu`, `AutocompleteInput`, and `AutocompleteOverlay` components
+
+* [#1489](https://github.com/primer/react/pull/1489) [`273ef29d`](https://github.com/primer/react/commit/273ef29d1d8f28bb856faba4da803e7ad0892c6e) Thanks [@mperrotti](https://github.com/mperrotti)! - Add alpha `TextInputWithTokens` component
+
+- [#1488](https://github.com/primer/react/pull/1488) [`05ac5aab`](https://github.com/primer/react/commit/05ac5aabb6bf39150557732605f9ce0fb3b9d1ec) Thanks [@mperrotti](https://github.com/mperrotti)! - Add alpha `Token`, `AvatarToken`, `IssueLabelToken` components
+
+## 30.2.1
+
+### Patch Changes
+
+- [#1500](https://github.com/primer/react/pull/1500) [`8c3531aa`](https://github.com/primer/react/commit/8c3531aa73c37770f961cbcfd94acbf1398f29bd) Thanks [@jfuchs](https://github.com/jfuchs)! - Fixed a bug where SelectPanel would not scroll with height:'auto'; maxHeight:'medium' passed to Overlay (https://github.com/github/primer/issues/333)
+
+## 30.2.0
+
+### Minor Changes
+
+- [#1497](https://github.com/primer/react/pull/1497) [`b9d6a662`](https://github.com/primer/react/commit/b9d6a662390a66298a4b2171319029812f5ea88d) Thanks [@jfuchs](https://github.com/jfuchs)! - Updated ActionList's ItemInput type to accept DOM props for divs when renderItem is not provided
+
+## 30.1.0
+
+### Minor Changes
+
+- [#1463](https://github.com/primer/react/pull/1463) [`bde3a034`](https://github.com/primer/react/commit/bde3a0344c713f15f5650b35195258901582bd41) Thanks [@jfuchs](https://github.com/jfuchs)! - `ActionList.item` accepts an `as` prop, allowing it to be a link, or (in combination with the renderItem prop) a Next.js or React Router link
+
+### Patch Changes
+
+- [#1471](https://github.com/primer/react/pull/1471) [`f1cebb7e`](https://github.com/primer/react/commit/f1cebb7e9af297a7c466701454aac6dc1eb7b3a4) Thanks [@smockle](https://github.com/smockle)! - Change the button which receives focus when a 'ConfirmationDialog' opens from the secondary (e.g. 'Cancel') to the primary (e.g. 'OK'). Fixes github/primer#313.
+
 ## 30.0.0
 
 ### Major Changes

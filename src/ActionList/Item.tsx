@@ -14,6 +14,8 @@ import {
   isActiveDescendantAttribute
 } from '../behaviors/focusZone'
 import {useSSRSafeId} from '@react-aria/ssr'
+import {ForwardRefComponent as PolymorphicForwardRefComponent} from '@radix-ui/react-polymorphic'
+import {AriaRole} from '../utils/types'
 
 const customItemThemes = {
   default: {
@@ -29,7 +31,7 @@ const customItemThemes = {
 /**
  * Contract for props passed to the `Item` component.
  */
-export interface ItemProps extends Omit<React.ComponentPropsWithoutRef<'div'>, 'id'>, SxProp {
+export interface ItemProps extends SxProp {
   /**
    * Primary text which names an `Item`.
    */
@@ -54,14 +56,21 @@ export interface ItemProps extends Omit<React.ComponentPropsWithoutRef<'div'>, '
   leadingVisual?: React.FunctionComponent<IconProps>
 
   /**
+   * @deprecated Use `trailingVisual` instead
    * Icon (or similar) positioned after `Item` text.
    */
   trailingIcon?: React.FunctionComponent<IconProps>
 
   /**
+   * @deprecated Use `trailingVisual` instead
    * Text positioned after `Item` text and optional trailing icon.
    */
   trailingText?: string
+
+  /**
+   * Icon or text positioned after `Item` text.
+   */
+  trailingVisual?: React.ReactNode
 
   /**
    * Style variations associated with various `Item` types.
@@ -105,14 +114,29 @@ export interface ItemProps extends Omit<React.ComponentPropsWithoutRef<'div'>, '
    * An id associated with this item.  Should be unique between items
    */
   id?: number | string
+
+  /**
+   * Node to be included inside the item before the text.
+   */
+  children?: React.ReactNode
+
+  /**
+   * The ARIA role describing the function of `List` component. `option` is a common value.
+   */
+  role?: AriaRole
+
+  /**
+   * An item to pass back in the `onAction` callback, meant as
+   */
+  item?: ItemInput
 }
 
 const getItemVariant = (variant = 'default', disabled?: boolean) => {
   if (disabled) {
     return {
-      color: get('colors.fg.muted'),
-      iconColor: get('colors.fg.muted'),
-      annotationColor: get('colors.fg.muted'),
+      color: get('colors.primer.fg.disabled'),
+      iconColor: get('colors.primer.fg.disabled'),
+      annotationColor: get('colors.primer.fg.disabled'),
       hoverCursor: 'default'
     }
   }
@@ -172,6 +196,7 @@ const StyledItem = styled.div<
   color: ${({variant, item}) => getItemVariant(variant, item?.disabled).color};
   // 2 frames on a 60hz monitor
   transition: background 33.333ms linear;
+  text-decoration: none;
 
   @media (hover: hover) and (pointer: fine) {
     :hover {
@@ -296,8 +321,9 @@ const MultiSelectInput = styled.input`
 /**
  * An actionable or selectable `Item` with an optional icon and description.
  */
-export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.Element {
+export const Item = React.forwardRef((itemProps, ref) => {
   const {
+    as: Component,
     text,
     description,
     descriptionVariant = 'inline',
@@ -305,6 +331,7 @@ export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.El
     selectionVariant,
     leadingVisual: LeadingVisual,
     trailingIcon: TrailingIcon,
+    trailingVisual: TrailingVisual,
     trailingText,
     variant = 'default',
     showDivider,
@@ -333,7 +360,7 @@ export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.El
       }
 
       if (!event.defaultPrevented && [' ', 'Enter'].includes(event.key)) {
-        onAction?.(itemProps as ItemProps, event)
+        onAction?.(itemProps, event)
       }
     },
     [onAction, disabled, itemProps, onKeyPress]
@@ -346,7 +373,7 @@ export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.El
       }
       onClick?.(event)
       if (!event.defaultPrevented) {
-        onAction?.(itemProps as ItemProps, event)
+        onAction?.(itemProps, event)
       }
     },
     [onAction, disabled, itemProps, onClick]
@@ -359,6 +386,8 @@ export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.El
 
   return (
     <StyledItem
+      ref={ref}
+      as={Component}
       tabIndex={disabled ? undefined : -1}
       variant={variant}
       showDivider={showDivider}
@@ -391,7 +420,7 @@ export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.El
               />
             </>
           ) : (
-            selected && <CheckIcon fill={theme?.colors.text.primary} />
+            selected && <CheckIcon fill={theme?.colors.fg.default} />
           )}
         </BaseVisualContainer>
       )}
@@ -428,7 +457,12 @@ export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.El
             </DescriptionContainer>
           ) : null}
         </MainContent>
-        {TrailingIcon || trailingText ? (
+        {/* backward compatibility: prefer TrailingVisual but fallback to TrailingIcon */}
+        {TrailingVisual ? (
+          <TrailingContent variant={variant} disabled={disabled}>
+            {typeof TrailingVisual === 'function' ? <TrailingVisual /> : TrailingVisual}
+          </TrailingContent>
+        ) : TrailingIcon || trailingText ? (
           <TrailingContent variant={variant} disabled={disabled}>
             {trailingText}
             {TrailingIcon && <TrailingIcon />}
@@ -437,4 +471,6 @@ export function Item(itemProps: Partial<ItemProps> & {item?: ItemInput}): JSX.El
       </DividedContent>
     </StyledItem>
   )
-}
+}) as PolymorphicForwardRefComponent<'div', ItemProps>
+
+Item.displayName = 'ActionList.Item'
