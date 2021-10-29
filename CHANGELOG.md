@@ -1,5 +1,11 @@
 # @primer/components
 
+## 31.2.0
+
+### Minor Changes
+
+- [#1544](https://github.com/primer/react/pull/1544) [`5b55b0ab`](https://github.com/primer/react/commit/5b55b0ab8ea06b077e141c02285c81b99e246b77) Thanks [@jfuchs](https://github.com/jfuchs)! - The sx prop now has types that will inform autocomplete for color and shadow values that are key paths into the theme.
+
 ## 31.1.0
 
 ### Minor Changes
